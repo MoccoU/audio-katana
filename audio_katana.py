@@ -415,16 +415,19 @@ def main():
     parser.add_argument(
         '--min_speech_dur', 
         help="Save chunks in a subfolder generated randomly",
+        type=int,
         default=250,
     )
     parser.add_argument(
         '--min_silence_dur', 
         help="Save chunks in a subfolder generated randomly",
+        type=int,
         default=100,
     )
     parser.add_argument(
         '--speech_pad', 
         help="Save chunks in a subfolder generated randomly",
+        type=int,
         default=30,
     )
 
