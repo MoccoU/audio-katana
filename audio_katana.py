@@ -27,7 +27,7 @@ def read_audio(path: str):
     return wav.squeeze(0)
 
 
-def save_audio(path: str, tensor: torch.Tensor, bits_per_sample: int, encoding: str, sampling_rate: int = 16000):
+def save_audio(path: str, tensor: torch.Tensor, bits_per_sample: int, encoding: str, sampling_rate: int = 44100):
     torchaudio.save(path, tensor.unsqueeze(0), sampling_rate, encoding=encoding, bits_per_sample=bits_per_sample)
 
 
@@ -41,9 +41,9 @@ def init_jit_model(model_path: str, device=torch.device('cpu')):
 def get_speech_timestamps(audio: torch.Tensor,
                           model,
                           threshold: float = 0.5,
-                          sampling_rate: int = 16000,
-                          min_speech_duration_ms: int = 250,
-                          min_silence_duration_ms: int = 100,
+                          sampling_rate: int = 44100,
+                          min_speech_duration_ms: int = 300,
+                          min_silence_duration_ms: int = 110,
                           window_size_samples: int = 512,
                           speech_pad_ms: int = 30,
                           return_seconds: bool = False):
