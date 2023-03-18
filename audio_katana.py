@@ -174,6 +174,7 @@ def get_speech_timestamps(audio: torch.Tensor,
             speech_dict['start'] *= step
             speech_dict['end'] *= step
 
+    print(speeches)
     return speeches
 
 
