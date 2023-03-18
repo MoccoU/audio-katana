@@ -42,10 +42,10 @@ def get_speech_timestamps(audio: torch.Tensor,
                           model,
                           threshold: float = 0.5,
                           sampling_rate: int = 16000,
-                          min_speech_duration_ms: int = 250,
-                          min_silence_duration_ms: int = 100,
+                          min_speech_duration_ms: int = 300,
+                          min_silence_duration_ms: int = 110,
                           window_size_samples: int = 512,
-                          speech_pad_ms: int = 30,
+                          speech_pad_ms: int = 20,
                           return_seconds: bool = False):
 
     """
