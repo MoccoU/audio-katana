@@ -42,10 +42,10 @@ def get_speech_timestamps(audio: torch.Tensor,
                           model,
                           threshold: float = 0.5,
                           sampling_rate: int = 16000,
-                          min_speech_duration_ms: int = 300,
-                          min_silence_duration_ms: int = 110,
+                          min_speech_duration_ms: int = 250,
+                          min_silence_duration_ms: int = 100,
                           window_size_samples: int = 512,
-                          speech_pad_ms: int = 20,
+                          speech_pad_ms: int = 30,
                           return_seconds: bool = False):
 
     """
@@ -269,7 +269,14 @@ def run(current_folder, args):
                 wav = read_audio(filename)
 
             # inference via the model
-            speech_timestamps = get_speech_timestamps(wav, model, sampling_rate=16000, window_size_samples=512)
+            speech_timestamps = get_speech_timestamps(
+                wav, 
+                model, 
+                sampling_rate=16000, 
+                window_size_samples=512,
+                min_speech_duration_ms=args.min_speech_dur,
+                min_silence_duration_ms=args.min_silence_dur,
+                speech_pad_ms=args.speech_pad)
 
             # set the chunk folder
             if args.random_subfolder:
@@ -289,8 +296,8 @@ def run(current_folder, args):
                 chunk_filename = f'{chunk_folder}/{original_filename}__chunk_{n}.wav'
 
                 # if the file does not exist, save it
-                if not os.path.exists(chunk_filename):
-                    save_audio(chunk_filename, chunk_wav, args.bits_per_sample, args.encoding, 16000)
+                #if not os.path.exists(chunk_filename):
+                    #save_audio(chunk_filename, chunk_wav, args.bits_per_sample, args.encoding, 16000)
 
                 # filter out chunks by WADA SNR
                 if args.min_wada_snr and args.max_wada_snr:
@@ -404,6 +411,21 @@ def main():
         '--random_subfolder', 
         help="Save chunks in a subfolder generated randomly",
         action='store_true',
+    )
+    parser.add_argument(
+        '--min_speech_dur', 
+        help="Save chunks in a subfolder generated randomly",
+        default=250,
+    )
+    parser.add_argument(
+        '--min_silence_dur', 
+        help="Save chunks in a subfolder generated randomly",
+        default=100,
+    )
+    parser.add_argument(
+        '--speech_pad', 
+        help="Save chunks in a subfolder generated randomly",
+        default=30,
     )
 
     args = parser.parse_args()
