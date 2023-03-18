@@ -46,7 +46,7 @@ def get_speech_timestamps(audio: torch.Tensor,
                           min_silence_duration_ms: int = 100,
                           window_size_samples: int = 512,
                           speech_pad_ms: int = 30,
-                          return_seconds: bool = True):
+                          return_seconds: bool = False):
 
     """
     This method is used for splitting long audios into speech chunks using silero VAD
